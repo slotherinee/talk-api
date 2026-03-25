@@ -21,6 +21,10 @@ app.use((req, res, next) => {
   next()
 })
 
+app.get('/ping', (_, res) => {
+  res.send('pong')
+})
+
 // ICE servers endpoint
 app.get('/api/ice-servers', (req, res) => {
   const turnCreds = generateTurnCredentials()
