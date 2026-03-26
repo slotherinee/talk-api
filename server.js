@@ -26,8 +26,7 @@ app.get('/ping', (_, res) => {
 })
 
 // ICE servers endpoint
-app.get('/api/ice-servers', (req, res) => {
-  const turnCreds = generateTurnCredentials()
+app.get('/api/ice-servers', (_, res) => {
   const iceServers = [
     // Российские — доступны без VPN
     { urls: 'stun:stun.sipnet.ru' },
@@ -35,15 +34,16 @@ app.get('/api/ice-servers', (req, res) => {
     // Google — доступны через VPN
     { urls: 'stun:stun.l.google.com:19302' },
     { urls: 'stun:stun1.l.google.com:19302' },
+
     {
-      urls: 'turn:' + req.get('host') + ':3478',
-      username: turnCreds.username,
-      credential: turnCreds.credential,
+      urls: `turn:${process.env.TURN_IP}:3478`,
+      username: 'turnuser',
+      credential: `${process.env.TURN_PW}`,
     },
     {
-      urls: 'turns:' + req.get('host') + ':443', // не 5349 — Render открывает только 443
-      username: turnCreds.username,
-      credential: turnCreds.credential,
+      urls: `turns:${process.env.TURN_IP}:5349`,
+      username: 'turnuser',
+      credential: `${process.env.TURN_PW}`,
     },
   ]
 
