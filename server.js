@@ -33,39 +33,39 @@ app.get('/api/ice-servers', (req, res) => {
     { urls: 'stun:stun.l.google.com:19302' },
     { urls: 'stun:stun1.l.google.com:19302' },
 
-    // Российские — приоритет первыми
-    { urls: 'stun:stun.sipnet.ru' },
-    { urls: 'stun:stun.sipnet.net' },
+    // // Российские — приоритет первыми
+    // { urls: 'stun:stun.sipnet.ru' },
+    // { urls: 'stun:stun.sipnet.net' },
 
-    // ✅ Metered.ca - бесплатный TURN, работает везде даже с VPN
-    {
-      urls: 'turn:openrelay.metered.ca:80',
-      username: 'openrelayproject',
-      credential: 'openrelayproject',
-    },
-    {
-      urls: 'turns:openrelay.metered.ca:443',
-      username: 'openrelayproject',
-      credential: 'openrelayproject',
-    },
+    // // ✅ Metered.ca - бесплатный TURN, работает везде даже с VPN
+    // {
+    //   urls: 'turn:openrelay.metered.ca:80',
+    //   username: 'openrelayproject',
+    //   credential: 'openrelayproject',
+    // },
+    // {
+    //   urls: 'turns:openrelay.metered.ca:443',
+    //   username: 'openrelayproject',
+    //   credential: 'openrelayproject',
+    // },
 
-    // Cloudflare — порт 3478 и 443 (443 редко блокируют)
-    { urls: 'stun:stun.cloudflare.com:3478' },
+    // // Cloudflare — порт 3478 и 443 (443 редко блокируют)
+    // { urls: 'stun:stun.cloudflare.com:3478' },
 
-    // Twilio — надёжный
-    { urls: 'stun:global.stun.twilio.com:3478' },
+    // // Twilio — надёжный
+    // { urls: 'stun:global.stun.twilio.com:3478' },
 
-    // TURNS на порту 443 — проходит почти везде
-    {
-      urls: 'turns:' + req.get('host') + ':443',
-      username: turnCreds.username,
-      credential: turnCreds.credential,
-    },
-    {
-      urls: 'turn:' + req.get('host') + ':3478?transport=tcp',
-      username: turnCreds.username,
-      credential: turnCreds.credential,
-    },
+    // // TURNS на порту 443 — проходит почти везде
+    // {
+    //   urls: 'turns:' + req.get('host') + ':443',
+    //   username: turnCreds.username,
+    //   credential: turnCreds.credential,
+    // },
+    // {
+    //   urls: 'turn:' + req.get('host') + ':3478?transport=tcp',
+    //   username: turnCreds.username,
+    //   credential: turnCreds.credential,
+    // },
   ]
 
   res.json({ iceServers })
