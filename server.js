@@ -29,13 +29,25 @@ app.get('/ping', (_, res) => {
 app.get('/api/ice-servers', (req, res) => {
   const turnCreds = generateTurnCredentials()
   const iceServers = [
+    // Google — на случай если не заблокированы
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun1.l.google.com:19302' },
+
     // Российские — приоритет первыми
     { urls: 'stun:stun.sipnet.ru' },
     { urls: 'stun:stun.sipnet.net' },
 
-    // Google — на случай если не заблокированы
-    { urls: 'stun:stun.l.google.com:19302' },
-    { urls: 'stun:stun1.l.google.com:19302' },
+    // ✅ Metered.ca - бесплатный TURN, работает везде даже с VPN
+    {
+      urls: 'turn:openrelay.metered.ca:80',
+      username: 'openrelayproject',
+      credential: 'openrelayproject',
+    },
+    {
+      urls: 'turns:openrelay.metered.ca:443',
+      username: 'openrelayproject',
+      credential: 'openrelayproject',
+    },
 
     // Cloudflare — порт 3478 и 443 (443 редко блокируют)
     { urls: 'stun:stun.cloudflare.com:3478' },
@@ -50,7 +62,7 @@ app.get('/api/ice-servers', (req, res) => {
       credential: turnCreds.credential,
     },
     {
-      urls: 'turn:' + req.get('host') + ':3478',
+      urls: 'turn:' + req.get('host') + ':3478?transport=tcp',
       username: turnCreds.username,
       credential: turnCreds.credential,
     },
