@@ -29,17 +29,19 @@ app.get('/ping', (_, res) => {
 app.get('/api/ice-servers', (req, res) => {
   const turnCreds = generateTurnCredentials()
   const iceServers = [
-    { urls: 'stun:stun.l.google.com:19302' },
-    { urls: 'stun:stun1.l.google.com:19302' },
+    // Российские — доступны без VPN
     { urls: 'stun:stun.sipnet.ru' },
     { urls: 'stun:stun.sipnet.net' },
+    // Google — доступны через VPN
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun1.l.google.com:19302' },
     {
       urls: 'turn:' + req.get('host') + ':3478',
       username: turnCreds.username,
       credential: turnCreds.credential,
     },
     {
-      urls: 'turns:' + req.get('host') + ':5349',
+      urls: 'turns:' + req.get('host') + ':443', // не 5349 — Render открывает только 443
       username: turnCreds.username,
       credential: turnCreds.credential,
     },
